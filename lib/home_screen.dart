@@ -27,7 +27,11 @@ class _HomeScreenState extends State<HomeScreen> {
     Marker(
         markerId: MarkerId('2'),
         position: LatLng(33.738045, 73.084488),
-        infoWindow: InfoWindow(title: 'e-11 Sector'))
+        infoWindow: InfoWindow(title: 'e-11 Sector')),
+    Marker(
+        markerId: MarkerId('3'),
+        position: LatLng(35.6762, 139.6503),
+        infoWindow: InfoWindow(title: 'Tokyo japan'))
   ];
   @override
   void initState() {
@@ -39,15 +43,27 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
+      body: SafeArea(
+        child: GoogleMap(
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+          initialCameraPosition: _kGooglePlex,
+          markers: Set<Marker>.of(_marker),
+          mapType: MapType.normal,
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
+          compassEnabled: true,
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.location_disabled_outlined),
+        onPressed: () async {
+          GoogleMapController controller = await _controller.future;
+          controller.animateCamera(CameraUpdate.newCameraPosition(
+              CameraPosition(target: LatLng(35.6762, 139.6503), zoom: 14)));
+          setState(() {});
         },
-        initialCameraPosition: _kGooglePlex,
-        markers: Set<Marker>.of(_marker),
-        mapType: MapType.normal,
-        myLocationEnabled: true,
-        compassEnabled: true,
       ),
     );
   }
