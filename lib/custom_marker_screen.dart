@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'dart:ui' as ui;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -14,6 +17,8 @@ class CustomMarkerScreen extends StatefulWidget {
 
 class _CustomMarkerScreenState extends State<CustomMarkerScreen> {
   final Completer<GoogleMapController> _controller = Completer();
+
+  Uint8List? markerImage;
 
   List<String> images = [
     'images/car.png',
@@ -42,6 +47,16 @@ class _CustomMarkerScreenState extends State<CustomMarkerScreen> {
   static const CameraPosition _kGooglePlex =
       CameraPosition(target: LatLng(33.6910, 72.98072), zoom: 15);
 
+  Future<Uint8List> getBytesFromAssets(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetHeight: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -49,12 +64,14 @@ class _CustomMarkerScreenState extends State<CustomMarkerScreen> {
     loadData();
   }
 
-  loadData() {
+  loadData() async {
     for (int i = 0; i < images.length; i++) {
+      final Uint8List markerIcon = await getBytesFromAssets(images[i], 100);
+
       _markers.add(Marker(
           markerId: MarkerId(i.toString()),
           position: _latLang[i],
-          icon: BitmapDescriptor.defaultMarker,
+          icon: BitmapDescriptor.fromBytes(markerIcon),
           infoWindow:
               InfoWindow(title: 'This is title marker: ' + i.toString())));
       setState(() {});
