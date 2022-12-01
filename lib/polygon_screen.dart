@@ -17,16 +17,16 @@ class _PolygoneScreenState extends State<PolygoneScreen> {
   Completer<GoogleMapController> _controller = Completer();
 
   CameraPosition _kGooglePlex =
-      CameraPosition(target: LatLng(33.654235, 73.073000), zoom: 14);
+      CameraPosition(target: LatLng(24.577974, 73.723881), zoom: 14);
 
   final Set<Marker> _markers = {};
   Set<Polygon> _polygone = HashSet<Polygon>();
   List<LatLng> points = [
-    LatLng(33.654235, 73.073000),
-    LatLng(33.647326, 72.820175),
-    LatLng(33.689531, 72.763160),
-    LatLng(34.131452, 72.662334),
-    LatLng(33.654235, 73.073000)
+    LatLng(24.577974, 73.723881),
+    LatLng(24.581034, 73.717657),
+    LatLng(24.579435, 73.708997),
+    LatLng(24.579451, 73.697027),
+    LatLng(24.577974, 73.723881),
   ];
 
   @override

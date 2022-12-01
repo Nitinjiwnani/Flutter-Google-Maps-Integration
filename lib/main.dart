@@ -6,7 +6,9 @@ import 'package:flutter_maps/custom_marker_screen.dart';
 import 'package:flutter_maps/google_places_api.dart';
 import 'package:flutter_maps/home_screen.dart';
 import 'package:flutter_maps/polygon_screen.dart';
+import 'package:flutter_maps/polyline.dart';
 import 'package:flutter_maps/user_current_location.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const PolygoneScreen(),
+      home: const PolyLineScreen(),
     );
   }
 }
