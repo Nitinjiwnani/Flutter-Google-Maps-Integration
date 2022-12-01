@@ -5,6 +5,7 @@ import 'package:flutter_maps/custom_marker_info_window.dart';
 import 'package:flutter_maps/custom_marker_screen.dart';
 import 'package:flutter_maps/google_places_api.dart';
 import 'package:flutter_maps/home_screen.dart';
+import 'package:flutter_maps/network_image_marker.dart';
 import 'package:flutter_maps/polygon_screen.dart';
 import 'package:flutter_maps/polyline.dart';
 import 'package:flutter_maps/user_current_location.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const PolyLineScreen(),
+      home: const CustomMarkerWithNetworkImage(),
     );
   }
 }
